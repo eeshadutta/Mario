@@ -3,6 +3,8 @@ This module contains all the configurations
 like symbols, constants, movements
 '''
 
+import os, time
+
 
 #representations of various objects
 _ground = "T"
@@ -56,7 +58,11 @@ def get_key(key):
 class Getch:
 
     def __init__(self):
-        self.impl = GetchUnix()
+        try:
+            self.impl = GetchWindows()
+        except ImportError:
+            self.impl = GetchUnix()
+
 
     def __call__(self):
         return self.impl()
@@ -79,6 +85,16 @@ class GetchUnix:
         finally:
             termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
         return ch
+
+class GetchWindows:
+
+    def __init__(self):
+        import msvcrt
+
+
+    def __call__(self):
+        import msvcrt
+        return msvcrt.getch()
 
 
 getch = Getch()
@@ -155,3 +171,20 @@ def printc(char, color):
         return colors[color] + char + '\x1b[0m'
     except:
         return char
+
+
+def print_screen(level, bd, mario, enemies, objects, scene):
+    os.system('clear')
+    bd.init_board(mario)
+    for sc in scene:
+        sc.draw(bd)
+    for ob in objects:
+        ob.draw(bd)
+    mario.drawPlayer(bd)
+    for en in enemies:
+        en.drawEnemy(bd)
+    # print ("SCORE: ", mario.score)
+    # print ("TIME LEFT: ", timelimit[level] - mario.play_time(), end=' ')
+    # print ("\t\t\tLIVES: ", mario.lives)
+    bd.render(mario, enemies)
+    #time.sleep(0.05)
