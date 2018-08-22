@@ -1,6 +1,5 @@
 from __future__ import print_function
-import signal,copy,sys,time
-from random import randint
+import sys
 import config
 
 
@@ -20,11 +19,11 @@ class Board():
         h = self._height
         for i in range(h):
             for j in range(self._left, self._right):
-                if (i<1 or i>(h-2)):
+                if (i < 1 or i > (h-2)):
                     self.buff[i][j] = "*"
-                elif (i>(h-5) and i<=(h-2)):
+                elif (i > (h-5) and i <= (h-2)):
                     self.buff[i][j] = "^"
-                elif (j<(self._left+1) or j>(self._left+w-2)):
+                elif (j < (self._left+1) or j > (self._left+w-2)):
                     self.buff[i][j] = "*"
                 else:
                     self.buff[i][j] = " "
@@ -56,7 +55,7 @@ class Board():
         self.buff[2][self._right-6] = "M"
         self.buff[2][self._right-5] = "E"
         self.buff[2][self._right-4] = ":"
-        self.buff[2][self._right-3] = config.timelimit[1] - mario.play_time()       
+        self.buff[2][self._right-3] = config.timelimit[1] - mario.play_time()
         for i in range(3):
             self.buff[self._height-28][354+i] = "_"
         self.buff[self._height-28][353] = "/"
@@ -70,7 +69,6 @@ class Board():
         self.buff[self._height-30][358] = "|"
         self.buff[self._height-31][358] = "|"
 
-
     def render(self, mario, enemies):
         if (mario.y >= self._left + (3/4)*self._width):
             self._left += 1
@@ -82,23 +80,23 @@ class Board():
         for i in range(self._height):
             for j in range(self._left, self._right):
                 if self.buff[i][j] == "*" or self.buff[i][j] == "^":
-                    print("\033[1;32;40m" + self.buff[i][j], end = ' ')
+                    print("\033[1;32;40m" + self.buff[i][j], end=' ')
                 elif self.buff[i][j] == "m":
-                    print("\033[1;36;40m" + self.buff[i][j], end = ' ')
+                    print("\033[1;36;40m" + self.buff[i][j], end=' ')
                 elif self.buff[i][j] == 'e':
-                    print("\033[1;31;40m" + self.buff[i][j], end =' ')
+                    print("\033[1;31;40m" + self.buff[i][j], end=' ')
                 elif self.buff[i][j] == "c":
-                    print("\033[1;34;40m" + self.buff[i][j], end = ' ')
+                    print("\033[1;34;40m" + self.buff[i][j], end=' ')
                 elif self.buff[i][j] == "X":
-                    print("\033[1;33;40m" + self.buff[i][j], end = ' ')
+                    print("\033[1;33;40m" + self.buff[i][j], end=' ')
                 elif self.buff[i][j] == "/" or self.buff[i][j] == "\\":
-                    print("\033[1;37;40m" + self.buff[i][j], end = ' ')
+                    print("\033[1;37;40m" + self.buff[i][j], end=' ')
                 elif self.buff[i][j] == "$":
-                    print("\033[1;35;40m" + self.buff[i][j], end = ' ')
+                    print("\033[1;35;40m" + self.buff[i][j], end=' ')
                 elif self.buff[i][j] == "|" or self.buff[i][j] == "-":
-                    print("\033[1;34;40m" + self.buff[i][j], end = ' ')
+                    print("\033[1;34;40m" + self.buff[i][j], end=' ')
                 else:
-                    print(self.buff[i][j], end = ' ')
+                    print(self.buff[i][j], end=' ')
             print()
 
     def process_input(self, player, key_press):
@@ -110,4 +108,3 @@ class Board():
             sys.exit(0)
 
         player.drawPlayer()
-        

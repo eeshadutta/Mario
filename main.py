@@ -1,5 +1,8 @@
 from __future__ import print_function
-import time, signal, sys, copy, datetime, os, random, subprocess
+import datetime
+import os
+import random
+import subprocess
 import config
 import board
 import person
@@ -40,7 +43,7 @@ def make_objects(objects, bd, mario, objects_y):
 
     h = obstacle.Obstacle(bd._height-4, 140, 3, 5)
     objects.append(h)
-    
+
     br = obstacle.Bricks(bd._height-12, 160, 2, 6)
     objects.append(br)
     br = obstacle.Bricks(bd._height-17, 172, 2, 4)
@@ -108,51 +111,51 @@ def make_objects(objects, bd, mario, objects_y):
 
 
 def put_coins(coins, bd):
-    coin = obstacle.Coins(bd._height-19,32,1,1)
+    coin = obstacle.Coins(bd._height-19, 32, 1, 1)
     coins.append(coin)
-    coin = obstacle.Coins(bd._height-19,33,1,1)
+    coin = obstacle.Coins(bd._height-19, 33, 1, 1)
     coins.append(coin)
-    coin = obstacle.Coins(bd._height-20,54,1,1)
+    coin = obstacle.Coins(bd._height-20, 54, 1, 1)
     coins.append(coin)
-    coin = obstacle.Coins(bd._height-20,52,1,1)
+    coin = obstacle.Coins(bd._height-20, 52, 1, 1)
     coins.append(coin)
-    coin = obstacle.Coins(bd._height-7,79,1,1)
+    coin = obstacle.Coins(bd._height-7, 79, 1, 1)
     coins.append(coin)
-    coin = obstacle.Coins(bd._height-11,141,1,1)
+    coin = obstacle.Coins(bd._height-11, 141, 1, 1)
     coins.append(coin)
-    coin = obstacle.Coins(bd._height-11,142,1,1)
+    coin = obstacle.Coins(bd._height-11, 142, 1, 1)
     coins.append(coin)
-    coin = obstacle.Coins(bd._height-11,143,1,1)
-    coins.append(coin)
-
-    coin = obstacle.Coins(bd._height-23,173,1,1)
-    coins.append(coin)
-    coin = obstacle.Coins(bd._height-23,174,1,1)
-    coins.append(coin)
-    
-    coin = obstacle.Coins(bd._height-18,211,1,1)
-    coins.append(coin)
-    coin = obstacle.Coins(bd._height-18,212,1,1)
-    coins.append(coin)
-    coin = obstacle.Coins(bd._height-18,213,1,1)
+    coin = obstacle.Coins(bd._height-11, 143, 1, 1)
     coins.append(coin)
 
-    coin = obstacle.Coins(bd._height-16,294,1,1)
+    coin = obstacle.Coins(bd._height-23, 173, 1, 1)
     coins.append(coin)
-    coin = obstacle.Coins(bd._height-16,307,1,1)
+    coin = obstacle.Coins(bd._height-23, 174, 1, 1)
     coins.append(coin)
-    coin = obstacle.Coins(bd._height-16,320,1,1)
+
+    coin = obstacle.Coins(bd._height-18, 211, 1, 1)
     coins.append(coin)
-    
-    coin = obstacle.Coins(bd._height-7,330,1,1)
+    coin = obstacle.Coins(bd._height-18, 212, 1, 1)
     coins.append(coin)
-    coin = obstacle.Coins(bd._height-11,334,1,1)
+    coin = obstacle.Coins(bd._height-18, 213, 1, 1)
     coins.append(coin)
-    coin = obstacle.Coins(bd._height-15,338,1,1)
+
+    coin = obstacle.Coins(bd._height-16, 294, 1, 1)
     coins.append(coin)
-    coin = obstacle.Coins(bd._height-19,342,1,1)
+    coin = obstacle.Coins(bd._height-16, 307, 1, 1)
     coins.append(coin)
-    coin = obstacle.Coins(bd._height-23,346,1,1)
+    coin = obstacle.Coins(bd._height-16, 320, 1, 1)
+    coins.append(coin)
+
+    coin = obstacle.Coins(bd._height-7, 330, 1, 1)
+    coins.append(coin)
+    coin = obstacle.Coins(bd._height-11, 334, 1, 1)
+    coins.append(coin)
+    coin = obstacle.Coins(bd._height-15, 338, 1, 1)
+    coins.append(coin)
+    coin = obstacle.Coins(bd._height-19, 342, 1, 1)
+    coins.append(coin)
+    coin = obstacle.Coins(bd._height-23, 346, 1, 1)
     coins.append(coin)
 
 
@@ -167,10 +170,10 @@ def spawn(enemies, num_enemies, bd, mario, objects_y):
 
 
 def main():
-    
+
     height, width, buff_width = (40, 80, 400)
     level = 1
-    bd = board.Board(height, width, buff_width, level)        
+    bd = board.Board(height, width, buff_width, level)
     mario = person.Player((height-6), 7, 1, 3, bd, level)
     enemies = []
     objects = []
@@ -192,7 +195,7 @@ def main():
     spawn(enemies, 2, bd, mario, objects_y)
     config.print_screen(level, bd, mario, enemies, objects, scene, coins)
     prev_round = datetime.datetime.now()
-    
+
     while (True):
         cur_round = datetime.datetime.now()
         if (cur_round - prev_round) >= datetime.timedelta(seconds=0.1):
@@ -217,7 +220,7 @@ def main():
             else:
                 mario.moveRight(bd)
         elif (inp == "d"):
-            if bd.buff[mario.x+2][mario.y+1] == " " and bd.buff[mario.x+2][mario.y+2] == " ":            
+            if bd.buff[mario.x+2][mario.y+1] == " " and bd.buff[mario.x+2][mario.y+2] == " ":
                 mario.jump(bd, -2, 1, enemies, objects, scene, coins)
             else:
                 mario.moveRight(bd)
@@ -250,9 +253,8 @@ def main():
             mario.gameOver(bd, enemies, "CONGRATS!! YOU HAVE WON!!")
         if mario.play_time() == 100:
             mario.gameOver(bd, enemies, "TIME OVER. YOU LOST. BETTER LUCK NEXT TIME.")
-        
 
         config.print_screen(level, bd, mario, enemies, objects, scene, coins)
 
-        
+
 main()

@@ -1,8 +1,9 @@
 from __future__ import print_function
-import signal,copy,sys,time,os, subprocess
-from random import randint
+import sys
+import time
+import os
+import subprocess
 import config
-import board
 
 
 class Person:
@@ -63,7 +64,7 @@ class Player(Person):
                     speed_y = 0
             if inp == "q":
                 self.gameOver(bd, enemies, "GAME ENDED")
-            
+
             if self.x < x_ini - 10 or flag == 2:
                 speed_x = -2
 
@@ -175,7 +176,7 @@ class Player(Person):
             self.x = self.x - speed_x
             if self.x > self.ini_x:
                 self.reduceLife(bd, self.x, self.y, enemies)
-                return 
+                return
             self.y = self.y + speed_y
 
             for i in range(2):
@@ -192,7 +193,7 @@ class Player(Person):
                             if c.x == x and c.y + 1 == y:
                                 coins.remove(c)
                         break
-            
+
             x_threshold = self.ini_x
 
             os.system("clear")
@@ -203,17 +204,16 @@ class Player(Person):
                     subprocess.Popen(['aplay', './Sounds/mb_touch.wav'])
                     os.system('clear')
                     self.killEnemy(en, enemies, bd)
-            config.print_screen(self.level, bd, self, enemies, objects, scene, coins)            
+            config.print_screen(self.level, bd, self, enemies, objects, scene, coins)
             time.sleep(.05)
 
             if flag == 1:
                 break
-        
+
         if self.x >= self.ini_x:
             if bd.buff[self.x+2][self.y] == " " and bd.buff[self.x+2][self.y+1] == " ":
                 self.reduceLife(bd, self.x, self.y, enemies)
                 return
-
 
     def reduceLife(self, bd, x, y, enemies):
         subprocess.Popen(['aplay', './Sounds/mb_die.wav'])
@@ -250,7 +250,7 @@ class Enemy(Person):
     def __init__(self, x, y, is_alive, lives, bd):
         Person.__init__(self, x, y, is_alive, lives, bd)
         self.speed_y = 1
-        self.type = 1 #1 for normal enemies and 2 for boss enemies
+        self.type = 1    # 1 for normal enemies and 2 for boss enemies
 
     def drawEnemy(self, bd):
         for i in range(2):
@@ -300,4 +300,3 @@ class Enemy(Person):
     def die(self, enemies, bd):
         self.is_alive = 0
         enemies.remove(self)
-        

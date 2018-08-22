@@ -1,8 +1,4 @@
 from __future__ import print_function
-import signal,copy,sys,time,os
-from random import randint
-import config
-import board
 
 
 class Obstacle:
@@ -18,7 +14,6 @@ class Obstacle:
                 bd.buff[self.x+i][self.y+j] = ' '
 
 
-
 class Clouds(Obstacle):
     def __init__(self, x, y, l, w):
         Obstacle.__init__(self, x, y, l, w)
@@ -32,7 +27,7 @@ class Clouds(Obstacle):
         bd.buff[self.x+1][self.y+1] = "c"
         bd.buff[self.x+1][self.y+2] = "c"
         bd.buff[self.x+1][self.y+3] = "c"
-        bd.buff[self.x+2][self.y] = " "        
+        bd.buff[self.x+2][self.y] = " "
         bd.buff[self.x+2][self.y+1] = "c"
         bd.buff[self.x+2][self.y+2] = "c"
         bd.buff[self.x+2][self.y+3] = " "
