@@ -121,6 +121,19 @@ def get_input(timeout=1):
     signal.signal(signal.SIGALRM, signal.SIG_IGN)
     return ''
 
+def get_input_jump(timeout=0.1):
+    import signal
+    signal.signal(signal.SIGALRM, alarmHandler)
+    signal.setitimer(signal.ITIMER_REAL, timeout, timeout)
+    try:
+        text = getch()
+        signal.alarm(0)
+        return text
+    except AlarmException:
+        pass
+    signal.signal(signal.SIGALRM, signal.SIG_IGN)
+    return ''
+
 
 # system colors
 colors = {
@@ -173,18 +186,16 @@ def printc(char, color):
         return char
 
 
-def print_screen(level, bd, mario, enemies, objects, scene):
+def print_screen(level, bd, mario, enemies, objects, scene, coins):
     os.system('clear')
     bd.init_board(mario)
     for sc in scene:
         sc.draw(bd)
+    for c in coins:
+        c.draw(bd)
     for ob in objects:
         ob.draw(bd)
     mario.drawPlayer(bd)
     for en in enemies:
         en.drawEnemy(bd)
-    # print ("SCORE: ", mario.score)
-    # print ("TIME LEFT: ", timelimit[level] - mario.play_time(), end=' ')
-    # print ("\t\t\tLIVES: ", mario.lives)
     bd.render(mario, enemies)
-    #time.sleep(0.05)

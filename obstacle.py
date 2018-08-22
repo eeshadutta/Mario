@@ -25,16 +25,16 @@ class Clouds(Obstacle):
 
     def draw(self, bd):
         bd.buff[self.x][self.y] = " "
-        bd.buff[self.x][self.y+1] = "C"
-        bd.buff[self.x][self.y+2] = "C"
+        bd.buff[self.x][self.y+1] = "c"
+        bd.buff[self.x][self.y+2] = "c"
         bd.buff[self.x][self.y+3] = " "
-        bd.buff[self.x+1][self.y] = "C"
-        bd.buff[self.x+1][self.y+1] = "C"
-        bd.buff[self.x+1][self.y+2] = "C"
-        bd.buff[self.x+1][self.y+3] = "C"
-        bd.buff[self.x+2][self.y] = " "
-        bd.buff[self.x+2][self.y+1] = "C"
-        bd.buff[self.x+2][self.y+2] = "C"
+        bd.buff[self.x+1][self.y] = "c"
+        bd.buff[self.x+1][self.y+1] = "c"
+        bd.buff[self.x+1][self.y+2] = "c"
+        bd.buff[self.x+1][self.y+3] = "c"
+        bd.buff[self.x+2][self.y] = " "        
+        bd.buff[self.x+2][self.y+1] = "c"
+        bd.buff[self.x+2][self.y+2] = "c"
         bd.buff[self.x+2][self.y+3] = " "
 
 
@@ -86,9 +86,15 @@ class Pipe(Obstacle):
         for i in range(self.length):
             for j in range(self.width):
                 bd.buff[self.x + i][self.y + j] = "-"
-        #for i in range(self.width):
-        #    bd.buff[self.x-1][self.y+i] = "_"
-        #bd.buff[self.x-1][self.y] = " _"
         for i in range(self.length):
             bd.buff[self.x+i][self.y] = "|"
             bd.buff[self.x+i][self.y+self.width] = "|"
+
+
+class Coins(Obstacle):
+    def __init__(self, x, y, l, w):
+        Obstacle.__init__(self, x, y, l, w)
+
+    def draw(self, bd):
+        bd.buff[self.x][self.y] = "$"
+        bd.buff[self.x][self.y+1] = "$"
